@@ -4,7 +4,7 @@ Donate link: http://www.zenfoliopress.com/
 Tags: comments, spam
 Requires at least: 2.7
 Tested up to: 3.2
-Stable tag: 0.0.2
+Stable tag: 0.0.3
 
 The ZenfolioPress plugin allows users to easily incorporate their Zenfolio hosted
 photos, galleries and collections into their WordPress site.
@@ -42,7 +42,7 @@ The id can be found at the end of the URL displayed in your web browser.
 
 If you have a friendly URL for a gallery or collection you can find the id by going to the edit view.
 
-> http:&#47;&#47;www.zenfolio.com/nusbaum/p__444438099__/edit
+> http:&#47;&#47;www.zenfolio.com/nusbaum/p**444438099**/edit
 
 == Frequently Asked Questions ==
 
@@ -59,6 +59,10 @@ Will add soon...
 
 == Changelog ==
 
+= 0.0.3 =
+As expected, deployment from the WordPress plugin directory had some minor impacts. Upated the path to the CSS file,
+but will look for a more dynamic way to get the path in the future.
+
 = 0.0.2 =
 Update to fix creating settings for new installs. You'll need this to configure ZenfolioPress.
 
@@ -66,6 +70,9 @@ Update to fix creating settings for new installs. You'll need this to configure 
 An alpha level release published for testing and getting input from potential users.
 
 == Upgrade Notice ==
+
+= 0.0.3 =
+Required to correctly load the style sheet for the plugin.
 
 = 0.0.2 ==
 Update to fix creating settings for new installs. You'll need this to configure ZenfolioPress.

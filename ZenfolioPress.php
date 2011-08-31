@@ -3,7 +3,7 @@
  Plugin Name: ZenfolioPress
  Plugin URI: http://www.zenfoliopress.com
  Description: Integrate Zenfolio images and galleries with Word Press.
- Version: 0.0.2
+ Version: 0.0.3
  Author: David Nusbaum
  Author URI: http://www.davidnusbaum.com
  License: GPL2
@@ -100,7 +100,7 @@ class ZenfolioPress {
 
 	public static function loadStyleSheet() {
 		$url = plugins_url('style.css', __FILE__);
-		$fileName = WP_PLUGIN_DIR . '/ZenfolioPress/style.css';
+		$fileName = WP_PLUGIN_DIR . '/zenfoliopress/style.css';
 		if ( file_exists($fileName) ) {
 			wp_register_style('ZFP_Style', $url,false,self::STYLE_VERSION);
 			wp_enqueue_style( 'ZFP_Style');
