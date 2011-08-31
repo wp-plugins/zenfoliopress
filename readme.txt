@@ -6,8 +6,8 @@ Requires at least: 2.7
 Tested up to: 3.2
 Stable tag: 0.0.2
 
-The ZenfolioPress plugin for WordPress allows users to easily incorporate their Zenfolio hosted
-photos, galleries and collection into their WordPress site.
+The ZenfolioPress plugin allows users to easily incorporate their Zenfolio hosted
+photos, galleries and collections into their WordPress site.
 
 == Description ==
 
@@ -61,6 +61,11 @@ Will add soon...
 
 = 0.0.1 =
 An alpha level release published for testing and getting input from potential users.
+
+== Upgrade Notice ==
+
+= 0.0.2 ==
+Update to fix creating settings for new installs. You'll need this to configure ZenfolioPress.
 
 == To Do ==
 
