@@ -59,6 +59,9 @@ Will add soon...
 
 == Changelog ==
 
+= 0.0.2 ==
+Update to fix creating settings for new installs. You'll need this to configure ZenfolioPress.
+
 = 0.0.1 =
 An alpha level release published for testing and getting input from potential users.
 
