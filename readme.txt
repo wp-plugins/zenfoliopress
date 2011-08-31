@@ -31,18 +31,18 @@ install the plugin from your WordPress dashboard -> plugins -> add new menu
 Insert the code [ZFP_Photo id='nnnn'] to display a photo from your Zenfolio account. 
 The photo id can be found at the end of the URL displayed in your web browser.
 
-> [http://www.davidnusbaum.com/individuals/h6913aba#__h6913aba__](http://www.davidnusbaum.com/individuals/h6913aba#h6913aba)
+> http:&#47;&#47;www.davidnusbaum.com/individuals/h6913aba#__h6913aba__
 
 = Displaying Galleries and Collections =
 
 Insert the code [ZFP_PhotoSet id='nnnn'] to display a Zenfolio gallery or collection. 
 The id can be found at the end of the URL displayed in your web browser.
 
-> http://www.davidnusbaum.com/p__444438099__
+> http:&#47;&#47;www.davidnusbaum.com/p__444438099__
 
 If you have a friendly URL for a gallery or collection you can find the id by going to the edit view.
 
-> http://www.zenfolio.com/nusbaum/p__444438099__/edit
+> http:&#47;&#47;www.zenfolio.com/nusbaum/p__444438099__/edit
 
 == Frequently Asked Questions ==
 
