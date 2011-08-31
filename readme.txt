@@ -33,7 +33,7 @@ The photo id can be found at the end of the URL displayed in your web browser.
 
 > `http://www.davidnusbaum.com/individuals/h6913aba#`__`h6913aba`__
 
-== Displaying Galleries and Collections ==
+= Displaying Galleries and Collections =
 
 Insert the code [ZFP_PhotoSet id='nnnn'] to display a Zenfolio gallery or collection. 
 The id can be found at the end of the URL displayed in your web browser.
