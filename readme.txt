@@ -38,7 +38,7 @@ The photo id can be found at the end of the URL displayed in your web browser.
 Insert the code [ZFP_PhotoSet id='nnnn'] to display a Zenfolio gallery or collection. 
 The id can be found at the end of the URL displayed in your web browser.
 
-> http:&#47;&#47;www.davidnusbaum.com/p__444438099__
+> http:&#47;&#47;www.davidnusbaum.com/p**444438099**
 
 If you have a friendly URL for a gallery or collection you can find the id by going to the edit view.
 
@@ -59,7 +59,7 @@ Will add soon...
 
 == Changelog ==
 
-= 0.0.2 ==
+= 0.0.2 =
 Update to fix creating settings for new installs. You'll need this to configure ZenfolioPress.
 
 = 0.0.1 =
