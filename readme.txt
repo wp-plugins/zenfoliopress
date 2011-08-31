@@ -4,12 +4,15 @@ Donate link: http://www.zenfoliopress.com/
 Tags: comments, spam
 Requires at least: 2.7
 Tested up to: 3.2
-Stable tag: 0.0.1
+Stable tag: 0.0.2
 
 The ZenfolioPress plugin for WordPress allows users to easily incorporate their Zenfolio hosted
 photos, galleries and collection into their WordPress site.
 
 == Description ==
+
+The ZenfolioPress plugin for WordPress allows users to easily incorporate their Zenfolio hosted
+photos, galleries and collection into their WordPress site.
 
 __Warning...__ This early release of the plugin is being posted for testing and input from potential users.
 It is quite likely that something may not work right in different hosting environment or using different 
@@ -18,9 +21,9 @@ browsers. I will fix bug and add enhancements as quick as possible.
 
 == Installation ==
 
-1. Extract the contents of the zip archive to the '/wp-content/plugins/' directory or 
+1. Extract the contents of the zip archive to the `/wp-content/plugins/` directory or 
 install the plugin from your WordPress dashboard -> plugins -> add new menu
-1. Activate the plugin through the \'Plugins menu\' in WordPress
+1. Activate the plugin through the 'Plugins menu' in WordPress
 1. Configure the plugin using the ZenfoliioPress settings page
 
 = Displaying Photos =
@@ -28,18 +31,18 @@ install the plugin from your WordPress dashboard -> plugins -> add new menu
 Insert the code [ZFP_Photo id='nnnn'] to display a photo from your Zenfolio account. 
 The photo id can be found at the end of the URL displayed in your web browser.
 
-> http://www.davidnusbaum.com/individuals/h6913aba#__h6913aba__
+> http:&#47;&#47;www.davidnusbaum.com/individuals/h6913aba#__h6913aba__
 
-== Displaying Galleries and Collections ==
+= Displaying Galleries and Collections =
 
 Insert the code [ZFP_PhotoSet id='nnnn'] to display a Zenfolio gallery or collection. 
 The id can be found at the end of the URL displayed in your web browser.
 
-> http://www.davidnusbaum.com/p__444438099__
+> http:&#47;&#47;www.davidnusbaum.com/p__444438099__
 
 If you have a friendly URL for a gallery or collection you can find the id by going to the edit view.
 
-> http://www.zenfolio.com/nusbaum/p__444438099__/edit
+> http:&#47;&#47;www.zenfolio.com/nusbaum/p__444438099__/edit
 
 == Frequently Asked Questions ==
 

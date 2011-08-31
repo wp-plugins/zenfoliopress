@@ -44,23 +44,23 @@ class ZenfolioPress {
 
 	public static function getFrameCellStyle($size) {
 		$sizes = self::getSizes();
-		$style = 'border: 0; '; 
+		$style = 'border: 0; ';
 		$style.= 'height: '.$sizes[$size][1].'px; ';
 		$style.= 'width: '.$sizes[$size][0].'px; ';
-		
+
 		return $style;
 	}
-	
+
 	public static function getFrameTableStyle($size) {
 		$sizes = self::getSizes();
-		$style = 'border: 0; '; 
+		$style = 'border: 0; ';
 		$style.= 'height: '.$sizes[$size][1].'px; ';
 		$style.= 'width: '.$sizes[$size][0].'px; ';
 		$style.= 'margin: 5px; ';
-		
+
 		return $style;
 	}
-	
+
 	public static function getOptions() {
 		if(self::$options === null) {
 			/* set default options */
@@ -70,9 +70,11 @@ class ZenfolioPress {
 
 			/* update defauls with current options */
 			$options = get_option('ZFP_Settings');
-			foreach ($options as $option=>$value) {
-				if(array_key_exists($option, $default)) {
-					$default[$option] = $value;
+			if(!empty($options)) {
+				foreach ($options as $option=>$value) {
+					if(array_key_exists($option, $default)) {
+						$default[$option] = $value;
+					}
 				}
 			}
 			self::$options = $default;
@@ -134,7 +136,7 @@ class ZenfolioPress {
 	}
 
 	public static function userNameHTML() {
-		$options = get_option('ZFP_Settings');
+		$options = self::getOptions();
 		echo "<input id='userName' name='ZFP_Settings[userName]' size='40' type='text' value='{$options['userName']}' />";
 	}
 
@@ -147,12 +149,12 @@ class ZenfolioPress {
 	}
 
 	public function photoSizeHTML() {
-		$options = get_option('ZFP_Settings');
+		$options = self::getOptions();
 		self::selectSizeHTML('photoSize', $options['photoSize']);
 	}
 
 	public function thumbSizeHTML() {
-		$options = get_option('ZFP_Settings');
+		$options = self::getOptions();
 		self::selectSizeHTML('thumbSize', $options['thumbSize']);
 	}
 
