@@ -20,9 +20,3 @@ td.zfpFrame {
 	padding: 0px!important;
 	background-color: transparent;
 }
-td.thumbTitle {text-align: center; vertical-align: middle; padding: 2px 2px 8px 2px;}
-
-img.overlay-3 {width: 580px; height: 453px; position: absolute; z-index: 1;}
-img.overlay-4 {width: 580px; height: 633px; position: absolute; z-index: 1;}
-td.caption {margin: 0 0 0 0; padding: 5px 5px 10px 5px; border-bottom: 1px solid #CCCCCC;}
-td.copyright {font-size: 6px; color: #333333; margin: 0 0 0 0; padding: 2px 2px 4px 2px;}
