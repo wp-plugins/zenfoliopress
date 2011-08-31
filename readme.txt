@@ -11,6 +11,10 @@ photos, galleries and collection into their WordPress site.
 
 == Description ==
 
+__Warning...__ This early release of the plugin is being posted for testing and input from potential users.
+It is quite likely that something may not work right in different hosting environment or using different 
+browsers. I will fix bug and add enhancements as quick as possible.
+
 
 == Installation ==
 
@@ -54,3 +58,8 @@ Will add soon...
 
 = 0.0.1 =
 An alpha level release published for testing and getting input from potential users.
+
+== To Do ==
+
+1. Add clear overlay gif to at least slow down efforts to right click and save your images.
+2. Add alternative actions for when images and thumbnails are clicked.
