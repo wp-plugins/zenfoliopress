@@ -31,7 +31,7 @@ install the plugin from your WordPress dashboard -> plugins -> add new menu
 Insert the code [ZFP_Photo id='nnnn'] to display a photo from your Zenfolio account. 
 The photo id can be found at the end of the URL displayed in your web browser.
 
-> `http://www\.davidnusbaum\.com/individuals/h6913aba#__h6913aba__`
+> [http://www.davidnusbaum.com/individuals/h6913aba#__h6913aba__](http://www.davidnusbaum.com/individuals/h6913aba#h6913aba)
 
 = Displaying Galleries and Collections =
 
