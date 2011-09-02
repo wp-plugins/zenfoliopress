@@ -6,8 +6,9 @@ Requires at least: 2.7
 Tested up to: 3.2
 Stable tag: 0.0.4
 
-The ZenfolioPress plugin allows users to easily incorporate their Zenfolio hosted
-photos, galleries and collections into their WordPress site.
+The ZenfolioPress plugin allows users to easily incorporate their 
+[Zenfolio](http://www.zenfolio.com) hosted photos, galleries and 
+collections into their WordPress site.
 
 == Description ==
 
@@ -28,14 +29,14 @@ install the plugin from your WordPress dashboard -> plugins -> add new menu
 
 = Displaying Photos =
 
-Insert the code [ZFP_Photo id='nnnn'] to display a photo from your Zenfolio account. 
+Insert the code **[ZFP_Photo id='nnnn']** to display a photo from your Zenfolio account. 
 The photo id can be found at the end of the URL displayed in your web browser.
 
 > http:&#47;&#47;www.davidnusbaum.com/individuals/h6913aba#__h6913aba__
 
 = Displaying Galleries and Collections =
 
-Insert the code [ZFP_PhotoSet id='nnnn'] to display a Zenfolio gallery or collection. 
+Insert the code **[ZFP_PhotoSet id='nnnn']** to display a Zenfolio gallery or collection. 
 The id can be found at the end of the URL displayed in your web browser.
 
 > http:&#47;&#47;www.davidnusbaum.com/p**444438099**
