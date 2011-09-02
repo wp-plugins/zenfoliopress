@@ -1,7 +1,7 @@
 === ZenfolioPress ===
 Contributors: nusbaum
 Donate link: http://www.zenfoliopress.com/
-Tags: comments, spam
+Tags: zenfolio, photo, gallery, photo gallery, photo collection, thumbnails
 Requires at least: 2.7
 Tested up to: 3.2
 Stable tag: 0.0.4
