@@ -4,7 +4,7 @@ Donate link: http://www.zenfoliopress.com/
 Tags: zenfolio, photo, gallery, photo gallery, photo collection, thumbnails
 Requires at least: 2.7
 Tested up to: 3.2
-Stable tag: 0.0.4
+Stable tag: 0.0.5
 
 The ZenfolioPress plugin allows users to easily incorporate their 
 [Zenfolio](http://www.zenfolio.com) hosted photos, galleries and 
@@ -14,11 +14,6 @@ collections into their WordPress site.
 
 The ZenfolioPress plugin for WordPress allows users to easily incorporate their Zenfolio hosted
 photos, galleries and collection into their WordPress site.
-
-__Warning...__ This early release of the plugin is being posted for testing and input from potential users.
-It is quite likely that something may not work right in different hosting environment or using different 
-browsers. I will fix bug and add enhancements as quick as possible.
-
 
 == Installation ==
 
@@ -60,6 +55,10 @@ Will add soon...
 
 == Changelog ==
 
+= 0.0.5 =
+Cleaned up the style sheet so inline styles aren't required. This should make it easier for users who want to use
+ZenfolioPress with their own styles. Continued testing with more themes to make sure there are no conflicts.
+
 = 0.0.4 =
 Added the ability to configure the link actions for photos and gallery thumbnails.
 
@@ -74,6 +73,10 @@ Update to fix creating settings for new installs. You'll need this to configure 
 An alpha level release published for testing and getting input from potential users.
 
 == Upgrade Notice ==
+= 0.0.5 =
+No functional changes, but removed the inline CSS so users have more flexibility when modifying the look of galleries 
+and collections.
+
 = 0.0.4 =
 This upgrade will allow you to configure the link actions for photos as well as thumbnails for galleries and collections.
 
@@ -86,4 +89,7 @@ Update to fix creating settings for new installs. You'll need this to configure 
 == To Do ==
 
 1. Add clear overlay gif to at least slow down efforts to right click and save your images.
-2. Add alternative actions for when images and thumbnails are clicked.
+1. Clicking the photo opens the “dim-the-lights” mode with the larger photo
+1. Insert a slideshow into a blog entry
+1. Strong call to action in a form of a “Buy Prints” or “Buy Products” button which will transition into the 
+buying experience.
