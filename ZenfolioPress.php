@@ -3,7 +3,7 @@
  Plugin Name: ZenfolioPress
  Plugin URI: http://www.zenfoliopress.com
  Description: Integrate Zenfolio images and galleries with Word Press.
- Version: 0.0.4
+ Version: 0.0.5
  Author: David Nusbaum
  Author URI: http://www.davidnusbaum.com
  License: GPL2
@@ -39,29 +39,9 @@ if ( is_admin() ){
 }
 
 class ZenfolioPress {
-	const STYLE_VERSION = 'v001';
+	const STYLE_VERSION = 'v002';
 	private static $options = null;
 	private static $sizes = null;
-
-
-	public static function getFrameCellStyle($size) {
-		$sizes = self::getSizes();
-		$style = 'border: 0; ';
-		$style.= 'height: '.$sizes[$size][1].'px; ';
-		$style.= 'width: '.$sizes[$size][0].'px; ';
-
-		return $style;
-	}
-
-	public static function getFrameTableStyle($size) {
-		$sizes = self::getSizes();
-		$style = 'border: 0; ';
-		$style.= 'height: '.$sizes[$size][1].'px; ';
-		$style.= 'width: '.$sizes[$size][0].'px; ';
-		$style.= 'margin: 5px; ';
-
-		return $style;
-	}
 
 	public static function getOptions() {
 		if(self::$options === null) {
@@ -86,22 +66,6 @@ class ZenfolioPress {
 			self::$options = $default;
 		}
 		return self::$options;
-	}
-
-	public static function getSizes() {
-		if(self::$sizes === null) {
-			$sizes['0'] = array(80,80);
-			$sizes['1'] = array(60,60);
-			$sizes['2'] = array(400,400);
-			$sizes['3'] = array(580,450);
-			$sizes['4'] = array(800,630);
-			$sizes['5'] = array(1100,850);
-			$sizes['6'] = array(1550,960);
-			$sizes['10'] = array(120,120);
-			$sizes['11'] = array(200,200);
-			self::$sizes = $sizes;
-		}
-		return self::$sizes;
 	}
 
 	public static function loadStyleSheet() {
@@ -157,12 +121,10 @@ class ZenfolioPress {
 		$photos = $photoSet->Photos;
 
 		$linkTarget = $options['thumbTarget'];
-		$tableStyle = self::getFrameTableStyle($size);
-		$cellStyle = self::getFrameCellStyle($size);
 
 		$html = '';
 		if(is_array($photos) && count($photos)) {
-			$html.= "<div class=\"zfp_gallery\">\n";
+			$html.= "<div class=\"zfp_photoset\">\n";
 			foreach ($photos as $photo) {
 				$src = 'http://'.$photo->UrlHost.'/'.$photo->UrlCore.'-'.$size.'.jpg?sn='.$photo->Sequence;
 				if($options['thumbAction'] == '2') {
@@ -174,11 +136,13 @@ class ZenfolioPress {
 				if($photo->Id == $photoSet->TitlePhoto->Id) {
 					$titleSrc = 'http://'.$photo->UrlHost.'/'.$photo->UrlCore.'-11.jpg?sn='.$photo->Sequence;
 				}
-				$html.= "<table class=\"zfpFrame\" style=\"$tableStyle\">\n";
-				$html.= "<tr class=\"zfpFrame\">\n";
-				$html.= "<td class=\"zfpFrame\" style=\"$cellStyle\">\n";
+				//$html.= "<table class=\"zfp_frame\" style=\"$tableStyle\">\n";
+				$html.= "<table class=\"zfp_frame zfp_$size\">\n";
+				$html.= "<tr class=\"zfp_frame\">\n";
+				//$html.= "<td class=\"zfp_frame \" style=\"$cellStyle\">\n";
+				$html.= "<td class=\"zfp_frame zfp_$size\">\n";
 				if($options['thumbAction'] > 0) {
-					$html.= "<a class=\"zfpFrame\" href=\"$link\" target=\"$linkTarget\">\n";
+					$html.= "<a class=\"zfp_frame\" href=\"$link\" target=\"$linkTarget\">\n";
 				}
 				$html.= "<img src=\"$src\"/ alt=\"$title\">\n";
 				if($options['thumbAction'] > 0) {
@@ -186,16 +150,9 @@ class ZenfolioPress {
 				}
 				$html.= "</td>\n";
 				$html.= "</tr>\n";
-				/*
-				 if($title) {
-				 echo "<td class=\"vt_title\"><a href=\"$link\">$title</a></td>\n";
-				 } else {
-				 echo '&nbsp;';
-				 }
-				 */
 				$html.= "</table>\n";
 			}
-			$html.= "</div> <!-- /zfp_gallery -->\n";
+			$html.= "</div> <!-- /zfp_photoset -->\n";
 		}
 
 		return $html;
