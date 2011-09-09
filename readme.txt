@@ -4,16 +4,17 @@ Donate link: http://www.zenfoliopress.com/
 Tags: zenfolio, photo, gallery, photo gallery, photo collection, thumbnails
 Requires at least: 2.7
 Tested up to: 3.2
-Stable tag: 0.0.5
+Stable tag: 0.0.6
 
 The ZenfolioPress plugin allows users to easily incorporate their 
-[Zenfolio](http://www.zenfolio.com) hosted photos, galleries and 
+Zenfolio hosted photos, galleries and 
 collections into their WordPress site.
 
 == Description ==
 
-The ZenfolioPress plugin for WordPress allows users to easily incorporate their Zenfolio hosted
-photos, galleries and collection into their WordPress site.
+The ZenfolioPress plugin for WordPress allows users to easily incorporate their 
+[Zenfolio](http://www.zenfolio.com) hosted photos, galleries and collection into their 
+WordPress site.
 
 == Installation ==
 
@@ -54,6 +55,9 @@ Answer to foo bar dilemma.
 Will add soon...
 
 == Changelog ==
+= 0.0.6 =
+Integrated an optional lightbox presentation for photos, gallaries and collections. This presentation utilizes the 
+[slimbox2](http://www.digitalia.be/software/slimbox2) jquery plugin by Christophe Beyls.
 
 = 0.0.5 =
 Cleaned up the style sheet so inline styles aren't required. This should make it easier for users who want to use
@@ -73,6 +77,11 @@ Update to fix creating settings for new installs. You'll need this to configure 
 An alpha level release published for testing and getting input from potential users.
 
 == Upgrade Notice ==
+
+= 0.0.6 =
+Integrated an optional lighbox presentation, similar to lights out, when an image is selected. Go to the options
+page and give it a try.
+
 = 0.0.5 =
 No functional changes, but removed the inline CSS so users have more flexibility when modifying the look of galleries 
 and collections.

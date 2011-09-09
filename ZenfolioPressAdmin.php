@@ -8,6 +8,7 @@ class ZenfolioPressAdmin {
 	public static function linkActionHTML($name,$value,$isPhotoSet = false) {
 		echo "<select id='$name' name='ZFP_Settings[$name]'>\n";
 		echo "<option value=\"0\"".($value == '0'?'selected':'').">None</option>\n";
+		echo "<option value=\"3\"".($value == '3'?'selected':'').">Open photo in Lightbox</option>\n";
 		if($isPhotoSet) {
 			echo "<option value=\"2\"".($value == '2'?'selected':'').">Open photo in Zenfolio collection</option>\n";
 		}
@@ -118,7 +119,7 @@ class ZenfolioPressAdmin {
 					}
 					break;
 				case 'photoAction':
-					if(in_array($value, array('0','1'))) {
+					if(in_array($value, array('0','1','3'))) {
 						$valid[$option] = $value;
 					}
 					break;
@@ -133,7 +134,7 @@ class ZenfolioPressAdmin {
 					}
 					break;
 				case 'thumbAction':
-					if(in_array($value, array('0','1','2'))) {
+					if(in_array($value, array('0','1','2','3'))) {
 						$valid[$option] = $value;
 					}
 					break;
