@@ -4,7 +4,7 @@ Donate link: http://www.zenfoliopress.com/
 Tags: zenfolio, photo, gallery, photo gallery, photo collection, thumbnails
 Requires at least: 2.7
 Tested up to: 3.2
-Stable tag: 0.0.6
+Stable tag: 0.0.7
 
 The ZenfolioPress plugin allows users to easily incorporate their 
 Zenfolio hosted photos, galleries and 
@@ -55,6 +55,9 @@ Answer to foo bar dilemma.
 Will add soon...
 
 == Changelog ==
+= 0.0.7 = 
+Minor changes to selectors in the CSS file.
+
 = 0.0.6 =
 Integrated an optional lightbox presentation for photos, gallaries and collections. This presentation utilizes the 
 [slimbox2](http://www.digitalia.be/software/slimbox2) jquery plugin by Christophe Beyls.
@@ -77,6 +80,8 @@ Update to fix creating settings for new installs. You'll need this to configure 
 An alpha level release published for testing and getting input from potential users.
 
 == Upgrade Notice ==
+= 0.0.7 = 
+Should prevent having a single column of thumbnails is certain themes.
 
 = 0.0.6 =
 Integrated an optional lighbox presentation, similar to lights out, when an image is selected. Go to the options
@@ -98,7 +103,6 @@ Update to fix creating settings for new installs. You'll need this to configure 
 == To Do ==
 
 1. Add clear overlay gif to at least slow down efforts to right click and save your images.
-1. Clicking the photo opens the “dim-the-lights” mode with the larger photo
 1. Insert a slideshow into a blog entry
 1. Strong call to action in a form of a “Buy Prints” or “Buy Products” button which will transition into the 
 buying experience.
