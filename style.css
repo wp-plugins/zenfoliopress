@@ -1,22 +1,12 @@
-.zfpFrame {
-	font-size: 0;
-	border: 0!important;
-	padding:0;
-	margin:0;
-}
-table.zfpFrame {
-	border: 0!important;
-	float: left!important; 
-	margin: 5px!important;
-	padding: 0px!important;
-	border-collapse: collapse;
-}
-td.zfpFrame {
-	text-align: center; 
-	line-height: 0;
-	border: 0!important;
-	vertical-align: middle; 
-	margin: 0px!important;
-	padding: 0px!important;
-	background-color: transparent;
-}
+#content .zfp_0, .zfp_0 {width: 80px; height: 80px;}
+#content .zfp_1, .zfp_1 {width: 60px; height: 60px;}
+#content .zfp_10, .zfp_10 {width: 120px; height: 120px;}
+#content .zfp_11, .zfp_11 {width: 200px; height: 200px;}
+#content .zfp_2, .zfp_2 {width: 400px; height: 400px;}
+#content .zfp_3, .zfp_3 {width: 580px; height: 450px;}
+#content .zfp_4, .zfp_4 {width: 800px; height: 630px;}
+#content .zfp_5, .zfp_5 {width: 1100px; height: 850px;}
+#content .zfp_6, .zfp_6 {width: 1550px; height: 960px;}
+#content .zfp_frame, .zfp_frame {font-size: 0; border: 0; padding:0; margin:0;}
+#content table.zfp_frame, table.zfp_frame {float: left; border-collapse: collapse; margin: 5px;}
+#content td.zfp_frame, td.zfp_frame {text-align: center; line-height: 0; vertical-align: middle; background-color: transparent;}
