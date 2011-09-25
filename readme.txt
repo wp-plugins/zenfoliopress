@@ -4,7 +4,7 @@ Donate link: http://www.zenfoliopress.com/
 Tags: zenfolio, photo, gallery, photo gallery, photo collection, thumbnails
 Requires at least: 2.7
 Tested up to: 3.2
-Stable tag: 0.0.7
+Stable tag: 0.0.8
 
 The ZenfolioPress plugin allows users to easily incorporate their 
 Zenfolio hosted photos, galleries and 
@@ -55,6 +55,9 @@ Answer to foo bar dilemma.
 Will add soon...
 
 == Changelog ==
+= 0.0.8 =
+Adjusted CSS to keep the background behind each thumbnail transparent.
+
 = 0.0.7 = 
 Minor changes to selectors in the CSS file.
 
@@ -80,6 +83,9 @@ Update to fix creating settings for new installs. You'll need this to configure 
 An alpha level release published for testing and getting input from potential users.
 
 == Upgrade Notice ==
+= 0.0.8 =
+Minor CSS update to force a transparent background behind each thumbnail.
+
 = 0.0.7 = 
 Should prevent having a single column of thumbnails is certain themes.
 
