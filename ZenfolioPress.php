@@ -1,9 +1,9 @@
 <?php
 /*
  Plugin Name: ZenfolioPress
- Plugin URI: http://www.zenfoliopress.com
+ Plugin URI: http://zenfoliopress.com
  Description: Integrate Zenfolio images and galleries with Word Press.
- Version: 0.0.8
+ Version: 0.0.9
  Author: David Nusbaum
  Author URI: http://www.davidnusbaum.com
  License: GPL2
