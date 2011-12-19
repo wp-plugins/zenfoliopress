@@ -32,7 +32,7 @@ echo <<<CSS
 #content .zfp_5, .zfp_5 {width: 1100px; height: 850px;}
 #content .zfp_6, .zfp_6 {width: 1550px; height: 960px;}
 #content .zfp_frame, .zfp_frame {font-size: 0; border: 0; padding:0; margin:0;}
-#content table.zfp_frame {float: left; border-collapse: collapse; margin: 0; background: none; background-color: transparent; border: 0;}
-#content td.zfp_frame {text-align: center; line-height: 0; vertical-align: middle; background: none; background-color: transparent; border: 0;}
+#content table.zfp_frame,table.zfp_frame {float: left; border-collapse: collapse; margin: 0; background: none; background-color: transparent; border: 0;}
+#content td.zfp_frame,td.zfp_frame {text-align: center; line-height: 0; vertical-align: middle; background: none; background-color: transparent; border: 0;}
 CSS;
 ?>

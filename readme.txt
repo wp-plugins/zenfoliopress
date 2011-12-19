@@ -3,12 +3,12 @@ Contributors: nusbaum
 Donate link: http://zenfoliopress.com/
 Tags: zenfolio, photo, gallery, photo gallery, photo collection, thumbnails
 Requires at least: 2.7
-Tested up to: 3.2
-Stable tag: 0.1.0
+Tested up to: 3.3
+Stable tag: 0.1.1
 
-The ZenfolioPress plugin allows users to easily incorporate their 
-Zenfolio hosted photos, galleries and 
-collections into their WordPress site.
+The ZenfolioPress plugin allows users to easily incorporate 
+their Zenfolio hosted photos, galleries and collections into 
+their WordPress site.
 
 == Description ==
 
@@ -55,11 +55,15 @@ Answer to foo bar dilemma.
 Will add soon...
 
 == Changelog ==
+= 0.1.1 =
+Quick CSS fix for themes that tie tr and td attributes to #content.
+
+= 0.1.0 =
+Fixed the space allocated for square thumbnails.
+
 = 0.0.9 =
-Added new configuration options:
-1. Add space around a thumbnail for a border.
-1. Include captions or titles for the lightbox presentation.
-1. Control the size of the lighbox image.
+Added new configuration options for spacing around thumbnails and using captions rather than titles 
+for the lightbox.
 
 = 0.0.8 =
 Adjusted CSS to keep the background behind each thumbnail transparent.
