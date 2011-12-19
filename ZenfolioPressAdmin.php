@@ -4,6 +4,25 @@ class ZenfolioPressAdmin {
 	public static function adminMenu() {
 		add_options_page('ZenfolioPress Options', 'ZenfolioPress', 'manage_options', 'zfp_options', array('ZenfolioPressAdmin','showOptions'));
 	}
+	
+	public static function lightBoxSettingsHTML() {
+		return;
+	}
+	
+	public function lightBoxSizeHTML() {
+		$options = ZenfolioPress::getOptions();
+		self::selectSizeHTML('lightBoxSize', $options['lightBoxSize']);
+	}
+	
+	public static function lightBoxTitleHTML() {
+		$options = ZenfolioPress::getOptions();
+		$value = $options['lightBoxTitle'];
+		echo "<select id='lightBoxTitle' name='ZFP_Settings[lightBoxTitle]'>\n";
+		echo "<option value=\"None\"".($value == 'None'?'selected':'').">None</option>\n";
+		echo "<option value=\"Title\"".($value == 'Title'?'selected':'').">Photo Title</option>\n";
+		echo "<option value=\"Caption\"".($value == 'Caption'?'selected':'').">Photo Caption</option>\n";
+		echo "</select>\n";
+	}
 
 	public static function linkActionHTML($name,$value,$isPhotoSet = false) {
 		echo "<select id='$name' name='ZFP_Settings[$name]'>\n";
@@ -29,11 +48,23 @@ class ZenfolioPressAdmin {
 	}
 
 	public static function photoSetSettingsHTML() {
-		//echo '<p>Default settings for galleries and collections</p>';
+		echo "<p>The shortcode to display a photoset is <code>&#91;ZFP_PhotoSet id='nnnn'&#93;</code> where 'nnnn' is\n";
+		echo "the id from the end of the page URL. For example, the id for http://www.davidnusbaum.com/p<strong>646661647</strong></i>\n";
+		echo "would be 64666467. If you are using a friendly URL, you can find the id by going to the edit view.</p>\n";
 	}
 
 	public static function photoSettingsHTML() {
-		//echo '<p>Default settings for photos</p>';
+		echo "<p>The shortcode to dispay a photo is <code>&#91;ZFP_Photo id='nnnn'&#93;</code> where 'nnnn' is the \n";
+		echo "id from the end of the photo page URL. For example, the id for http://www.davidnusbaum.com/portraits/h75015d5#h<strong>75015d5</strong>\n";
+		echo "would be 75015d5\n";
+	}
+	
+	public static function donateHTML() {
+		echo '<p><a href="http://zenfoliopress.com">ZenfolioPress</a> is provided by ';
+		echo '<a href="http://www.davidnusbaum.com">David Nusbaum Photography</a>. ';
+		echo 'If you like it, please consider offering a ';
+		echo '<a href="http://www.facebook.com/david.nusbaum.photography" target="_blank">like over on Facebook</a> ';
+		echo 'as an incentive for me to keep making improvements.</p>';
 	}
 
 	public function photoSizeHTML() {
@@ -59,8 +90,15 @@ class ZenfolioPressAdmin {
 
 		add_settings_section('ZFP_PhotoSetSettings', 'Default Gallery and Collection Settings',array('ZenfolioPressAdmin','photoSetSettingsHTML'), 'ZenfolioPress');
 		add_settings_field('thumbSize', 'Thumbnail Size', array('ZenfolioPressAdmin','thumbSizeHTML'), 'ZenfolioPress', 'ZFP_PhotoSetSettings');
+		add_settings_field('thumbPadding', 'Thumbnail Padding', array('ZenfolioPressAdmin','thumbPaddingHTML'), 'ZenfolioPress', 'ZFP_PhotoSetSettings');
 		add_settings_field('thumbAction', 'Thumbnail Link Action', array('ZenfolioPressAdmin','thumbActionHTML'), 'ZenfolioPress', 'ZFP_PhotoSetSettings');
 		add_settings_field('thumbTarget', 'Thumbnail Link Target', array('ZenfolioPressAdmin','thumbTargetHTML'), 'ZenfolioPress', 'ZFP_PhotoSetSettings');
+		
+		add_settings_section('ZFP_LightBoxSettings', 'Default LightBox Settings',array('ZenfolioPressAdmin','lightBoxSettingsHTML'), 'ZenfolioPress');
+		add_settings_field('lightBoxSize', 'Photo Size', array('ZenfolioPressAdmin','lightBoxSizeHTML'), 'ZenfolioPress', 'ZFP_LightBoxSettings');
+		add_settings_field('lightBoxTitle', 'Photo Title', array('ZenfolioPressAdmin','lightBoxTitleHTML'), 'ZenfolioPress', 'ZFP_LightBoxSettings');
+		
+		add_settings_section('ZFP_Donate', 'Support ZenfolioPress',array('ZenfolioPressAdmin','donateHTML'), 'ZenfolioPress');
 	}
 
 	public static function selectSizeHTML($name,$value) {
@@ -92,6 +130,20 @@ class ZenfolioPressAdmin {
 	public function thumbSizeHTML() {
 		$options = ZenfolioPress::getOptions();
 		self::selectSizeHTML('thumbSize', $options['thumbSize']);
+	}
+	
+	public function thumbPaddingHTML() {
+		$options = ZenfolioPress::getOptions();
+		$value = $options['thumbPadding'];
+		echo "<select id='thumbPadding' name='ZFP_Settings[thumbPadding]'>\n";
+		echo "<option value=\"0\"".($value == '0'?'selected':'').">0</option>\n";
+		echo "<option value=\"1\"".($value == '1'?'selected':'').">1</option>\n";
+		echo "<option value=\"2\"".($value == '2'?'selected':'').">2</option>\n";
+		echo "<option value=\"3\"".($value == '3'?'selected':'').">3</option>\n";
+		echo "<option value=\"5\"".($value == '5'?'selected':'').">5</option>\n";
+		echo "<option value=\"7\"".($value == '7'?'selected':'').">7</option>\n";
+		echo "<option value=\"10\"".($value == '10'?'selected':'').">10</option>\n";
+		echo "</select>\n";	
 	}
 
 	public static function thumbTargetHTML() {
@@ -138,8 +190,23 @@ class ZenfolioPressAdmin {
 						$valid[$option] = $value;
 					}
 					break;
+				case 'thumbPadding':
+					if($value >= '0' && $value < '11') {
+						$valid[$option] = $value;
+					}
+					break;
 				case 'thumbTarget':
 					if(in_array($value, array('_self','_blank'))) {
+						$valid[$option] = $value;
+					}
+					break;
+				case 'lightBoxSize':
+					if(in_array($value, array('0','1','2','3','4','5','6','10','11'))) {
+						$valid[$option] = $value;
+					}
+					break;
+				case 'lightBoxTitle':
+					if(in_array($value, array('None','Title','Caption'))) {
 						$valid[$option] = $value;
 					}
 					break;

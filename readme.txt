@@ -1,10 +1,10 @@
 === ZenfolioPress ===
 Contributors: nusbaum
-Donate link: http://www.zenfoliopress.com/
+Donate link: http://zenfoliopress.com/
 Tags: zenfolio, photo, gallery, photo gallery, photo collection, thumbnails
 Requires at least: 2.7
 Tested up to: 3.2
-Stable tag: 0.0.8
+Stable tag: 0.0.9
 
 The ZenfolioPress plugin allows users to easily incorporate their 
 Zenfolio hosted photos, galleries and 
@@ -55,6 +55,12 @@ Answer to foo bar dilemma.
 Will add soon...
 
 == Changelog ==
+= 0.0.9 =
+Added new configuration options:
+1. Add space around a thumbnail for a border.
+1. Include captions or titles for the lightbox presentation.
+1. Control the size of the lighbox image.
+
 = 0.0.8 =
 Adjusted CSS to keep the background behind each thumbnail transparent.
 

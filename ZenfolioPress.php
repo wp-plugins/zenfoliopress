@@ -54,8 +54,11 @@ class ZenfolioPress {
 			$default['photoAction']='1';
 			$default['photoTarget']='_self';
 			$default['thumbSize']='10';
+			$default['thumbPadding']='0';
 			$default['thumbAction']='2';
 			$default['thumbTarget']='_self';
+			$default['lightBoxSize']='3';
+			$default['lightBoxTitle']='Title';
 
 			/* update defauls with current options */
 			$options = get_option('ZFP_Settings');
@@ -86,16 +89,17 @@ class ZenfolioPress {
 	}
 
 	public static function loadStyleSheets() {
+		$options = self::getOptions();
+				
 		/* load ZenfolioPress style sheet */
-		$url = plugins_url('style.css', __FILE__);
-		$fileName = WP_PLUGIN_DIR . '/zenfoliopress/style.css';
+		$url = plugins_url('style.php', __FILE__);
+		$fileName = WP_PLUGIN_DIR . '/zenfoliopress/style.php';
 		if ( file_exists($fileName) ) {
-			wp_register_style('zfp_style', $url,false,self::STYLE_VERSION);
+			wp_register_style('zfp_style', $url,false,self::STYLE_VERSION.'|'.$options['thumbPadding']);
 			wp_enqueue_style( 'zfp_style');
 		}
 
 		/* load lightbox style sheet if needed */
-		$options = self::getOptions();
 		if($options['photoAction'] == '3' | $options['thumbAction'] == '3' ) {
 			$url = plugins_url('slimbox2.css', __FILE__);
 			$fileName = WP_PLUGIN_DIR . '/zenfoliopress/slimbox2.css';
@@ -154,11 +158,13 @@ class ZenfolioPress {
 		/* retrieve the PhotoSet data from zenfolio */
 		require_once('Zenfolio.php');
 		$zenfolio = new Zenfolio();
-		$photoSet = $zenfolio->loadPhotoSet($id,'LEVEL2',true);
+		$includeDetails = $options['lightBoxTitle']=='Caption' ? 2 : 1;
+		$photoSet = $zenfolio->loadPhotoSet($id,'LEVEL2',$includeDetails);
 		$photos = $photoSet->Photos;
-
+		
 		$target = $options['thumbAction'] < '3' ? 'target="'.$options['thumbTarget'].'"' : '';
 		$lightbox = $options['thumbAction'] == '3' ? 'rel="lightbox-ps'.$id.'"' : '';
+		$lightBoxSize = $options['lightBoxSize'];
 
 		$html = '';
 		if(is_array($photos) && count($photos)) {
@@ -170,12 +176,21 @@ class ZenfolioPress {
 						$link = $photoSet->PageUrl.substr($photo->PageUrl,strrpos($photo->PageUrl,'/'));
 						break;
 					case '3':
-						$link = 'http://'.$photo->UrlHost.$photo->UrlCore.'-3.jpg?sn='.$photo->Sequence;
+						$link = 'http://'.$photo->UrlHost.$photo->UrlCore.'-'.$lightBoxSize.'.jpg?sn='.$photo->Sequence;
 						break;
 					default:
 						$link = $photo->PageUrl;
 				}
-				$title = $photo->Title ? 'title="'.htmlspecialchars($photo->Title).'"' : '';
+				switch($options['lightBoxTitle']) {
+					case 'Title':
+						$title = $photo->Title ? 'title="'.htmlspecialchars($photo->Title).'"' : '';
+						break;
+					case 'Caption':
+						$title = $photo->Caption ? 'title="'.htmlspecialchars($photo->Caption).'"' : '';
+						break;
+					default:
+						$title = '';
+				}
 				if($photo->Id == $photoSet->TitlePhoto->Id) {
 					$titleSrc = 'http://'.$photo->UrlHost.$photo->UrlCore.'-11.jpg?sn='.$photo->Sequence;
 				}
