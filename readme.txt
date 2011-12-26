@@ -4,7 +4,7 @@ Donate link: http://zenfoliopress.com/
 Tags: zenfolio, photo, gallery, photo gallery, photo collection, thumbnails
 Requires at least: 2.7
 Tested up to: 3.3
-Stable tag: 0.1.1
+Stable tag: 0.1.2
 
 The ZenfolioPress plugin allows users to easily incorporate 
 their Zenfolio hosted photos, galleries and collections into 
@@ -55,6 +55,9 @@ Answer to foo bar dilemma.
 Will add soon...
 
 == Changelog ==
+= 0.1.2 =
+Fixed a bug that affected how titles and captions are set for photosets.
+
 = 0.1.1 =
 Quick CSS fix for themes that tie tr and td attributes to #content.
 

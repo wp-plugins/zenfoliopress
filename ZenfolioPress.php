@@ -3,7 +3,7 @@
  Plugin Name: ZenfolioPress
  Plugin URI: http://zenfoliopress.com
  Description: Integrate Zenfolio images and galleries with Word Press.
- Version: 0.1.1
+ Version: 0.1.2
  Author: David Nusbaum
  Author URI: http://www.davidnusbaum.com
  License: GPL2
@@ -184,12 +184,15 @@ class ZenfolioPress {
 				switch($options['lightBoxTitle']) {
 					case 'Title':
 						$title = $photo->Title ? 'title="'.htmlspecialchars($photo->Title).'"' : '';
+						$alt = $photo->Title ? 'alt="'.htmlspecialchars($photo->Title).'"' : '';
 						break;
 					case 'Caption':
 						$title = $photo->Caption ? 'title="'.htmlspecialchars($photo->Caption).'"' : '';
+						$alt = $photo->Caption ? 'alt="'.htmlspecialchars($photo->Caption).'"' : '';
 						break;
 					default:
 						$title = '';
+						$alt = '';
 				}
 				if($photo->Id == $photoSet->TitlePhoto->Id) {
 					$titleSrc = 'http://'.$photo->UrlHost.$photo->UrlCore.'-11.jpg?sn='.$photo->Sequence;
@@ -202,7 +205,7 @@ class ZenfolioPress {
 				if($options['thumbAction'] > 0) {
 					$html.= "<a class=\"zfp_frame\" href=\"$link\" $lightbox $title $target>\n";
 				}
-				$html.= "<img src=\"$src\"/ alt=\"$title\">\n";
+				$html.= "<img src=\"$src\"/ $alt >\n";
 				if($options['thumbAction'] > 0) {
 					$html.= "</a>\n";
 				}
