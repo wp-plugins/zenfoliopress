@@ -4,7 +4,7 @@ Donate link: http://zenfoliopress.com/
 Tags: zenfolio, photo, gallery, photo gallery, photo collection, thumbnails
 Requires at least: 2.7
 Tested up to: 3.3
-Stable tag: 0.1.2
+Stable tag: 0.1.3
 
 The ZenfolioPress plugin allows users to easily incorporate 
 their Zenfolio hosted photos, galleries and collections into 
@@ -55,6 +55,10 @@ Answer to foo bar dilemma.
 Will add soon...
 
 == Changelog ==
+= 0.1.3 = 
+Photo, as well as photoset, lightbox now uses the default image size. Changed the "rel" attribute so the ZenfolioPress 
+used of Slimbox does not conflict with the Slimbox plugin.
+ 
 = 0.1.2 =
 Fixed a bug that affected how titles and captions are set for photosets.
 

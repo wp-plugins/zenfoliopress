@@ -3,7 +3,7 @@
  Plugin Name: ZenfolioPress
  Plugin URI: http://zenfoliopress.com
  Description: Integrate Zenfolio images and galleries with Word Press.
- Version: 0.1.2
+ Version: 0.1.3
  Author: David Nusbaum
  Author URI: http://www.davidnusbaum.com
  License: GPL2
@@ -42,7 +42,7 @@ if ( is_admin() ){
 class ZenfolioPress {
 	const STYLE_VERSION = 'v003';
 	const LIGHTBOX_STYLE_VERSION = 'v2.04';
-	const LIGHTBOX_VERSION = 'v2.04';
+	const LIGHTBOX_VERSION = 'v2.04z';
 	private static $options = null;
 	private static $sizes = null;
 
@@ -113,6 +113,7 @@ class ZenfolioPress {
 	public static function showPhoto($params) {
 		$options = self::getOptions();
 		$default_size = $options['photoSize'];
+		$lightBoxSize = $options['lightBoxSize'];
 		extract(shortcode_atts(array('id' => '','size'=>$default_size), $params));
 		/* trim off any additional characters the user might have included */
 		if(($h=strrpos($id,'h'))!==false) {
@@ -126,11 +127,11 @@ class ZenfolioPress {
 		$photo = $zenfolio->loadPhoto($id,'LEVEL2');
 
 		if($options['photoAction'] == '3') {
-			$link = 'http://'.$photo->UrlHost.$photo->UrlCore.'-3.jpg?sn='.$photo->Sequence;
+			$link = 'http://'.$photo->UrlHost.$photo->UrlCore.'-'.$lightBoxSize.'.jpg?sn='.$photo->Sequence;
 		} else {
 			$link = $photo->PageUrl;
 		}
-		$lightbox = $options['photoAction'] == '3' ? 'rel="lightbox-p'.$id.'"' : '';
+		$lightbox = $options['photoAction'] == '3' ? 'rel="zfpLightbox-p'.$id.'"' : '';
 		$title = $photo->Title ? 'title="'.htmlspecialchars($photo->Title).'"' : '';
 		$target = $options['photoAction'] < '3' ? 'target="'.$options['photoTarget'].'"' : '';
 		$src = 'http://'.$photo->UrlHost.'/'.$photo->UrlCore.'-'.$size.'.jpg?sn='.$photo->Sequence;
@@ -163,14 +164,14 @@ class ZenfolioPress {
 		$photos = $photoSet->Photos;
 		
 		$target = $options['thumbAction'] < '3' ? 'target="'.$options['thumbTarget'].'"' : '';
-		$lightbox = $options['thumbAction'] == '3' ? 'rel="lightbox-ps'.$id.'"' : '';
+		$lightbox = $options['thumbAction'] == '3' ? 'rel="zfpLightbox-ps'.$id.'"' : '';
 		$lightBoxSize = $options['lightBoxSize'];
 
 		$html = '';
 		if(is_array($photos) && count($photos)) {
 			$html.= "<div id=\"zfp_photoset_$id\" class=\"zfp_photoset\">\n";
 			foreach ($photos as $photo) {
-				$src = 'http://'.$photo->UrlHost.'/'.$photo->UrlCore.'-'.$size.'.jpg?sn='.$photo->Sequence;
+				$src = 'http://'.$photo->UrlHost.$photo->UrlCore.'-'.$size.'.jpg?sn='.$photo->Sequence;
 				switch ($options['thumbAction']) {
 					case '2':
 						$link = $photoSet->PageUrl.substr($photo->PageUrl,strrpos($photo->PageUrl,'/'));
@@ -205,7 +206,7 @@ class ZenfolioPress {
 				if($options['thumbAction'] > 0) {
 					$html.= "<a class=\"zfp_frame\" href=\"$link\" $lightbox $title $target>\n";
 				}
-				$html.= "<img src=\"$src\"/ $alt >\n";
+				$html.= "<img src=\"$src\" $alt >\n";
 				if($options['thumbAction'] > 0) {
 					$html.= "</a>\n";
 				}
