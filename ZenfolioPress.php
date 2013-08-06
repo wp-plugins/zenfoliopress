@@ -42,7 +42,7 @@ if ( is_admin() ){
 class ZenfolioPress {
 	const STYLE_VERSION = 'v003';
 	const LIGHTBOX_STYLE_VERSION = 'v2.04';
-	const LIGHTBOX_VERSION = 'v2.04z';
+	const LIGHTBOX_VERSION = 'v2.05z';
 	private static $options = null;
 	private static $sizes = null;
 

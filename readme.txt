@@ -3,8 +3,8 @@ Contributors: nusbaum
 Donate link: http://zenfoliopress.com/
 Tags: zenfolio, photo, gallery, photo gallery, photo collection, thumbnails
 Requires at least: 2.7
-Tested up to: 3.3
-Stable tag: 0.1.3
+Tested up to: 3.6
+Stable tag: 0.1.4
 
 The ZenfolioPress plugin allows users to easily incorporate 
 their Zenfolio hosted photos, galleries and collections into 
