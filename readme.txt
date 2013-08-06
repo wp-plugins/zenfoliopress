@@ -55,6 +55,9 @@ Answer to foo bar dilemma.
 Will add soon...
 
 == Changelog ==
+= 0.1.4 = 
+Updated to slimbox v2.05
+
 = 0.1.3 = 
 Photo, as well as photoset, lightbox now uses the default image size. Changed the "rel" attribute so the ZenfolioPress 
 used of Slimbox does not conflict with the Slimbox plugin.
