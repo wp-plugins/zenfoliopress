@@ -45,9 +45,10 @@ If you have a friendly URL for a gallery or collection you can find the id by go
 **id**  
 This is the photo or photo set id and is described above because it is always required.
 
-== size ==
+**size**  
 This is the size of the photo or thumbnail that is displayed on the page or post. The
 options are based on those provided by Zenfolio.  
+
 * '0'	Small thumbnail (up to 80 x 80)
 * '1'	Square thumbnail (60 x 60, cropped square)
 * '10'	Medium thumbnail (up to 120 x 120)
@@ -58,28 +59,31 @@ options are based on those provided by Zenfolio.
 * '5'	X-Large (up to 1100 x 850)
 * '6'	XX-Large (up to 1550 x 960)
 
-== padding ==
+**padding**  
 This is the amount of padding, in pixels, that is placed around an image in a photo set.
 The value should be a number with no trailing 'px'.
 
-== action ==
+**action**  
 This is the action that will occur when a view clicks on an image.
+
 * '0' Nothing will happen.
 * '3' Open the photo in a lightbox.
 * '2' Open the photo in the Zenfolio collection it came from. (only applies to photosets)
 * '1' Open the photo in the Zenfolio gallery it came from.
 
-== link_target ==
+**link_target**  
 This defines how a photo will link to a Zenfolio collection or gallery.
+
 * '_self' The collection or gallery is opened in the same browser window.
 * '_blank' The collection or gallery is opened in a new browser window.
 
-== box_size == 
+**box_size**   
 This defines the size of the photo that will appear in the lightbox. The options are
 the same as described for the size option.
 
-== box_title ==
+**box_title**
 The defines the photo title that is included with the lightbox.
+
 * 'None' No title is displayed.
 * 'Title' The photo title from Zenfolio is displayed.
 * 'Caption' The photo caption from Zenfolio is displayed.
