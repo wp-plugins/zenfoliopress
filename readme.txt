@@ -42,7 +42,7 @@ If you have a friendly URL for a gallery or collection you can find the id by go
 > http:&#47;&#47;www.zenfolio.com/nusbaum/p**444438099**/edit
 
 = Short Code Options =
-== id ==
+**id**  
 This is the photo or photo set id and is described above because it is always required.
 
 == size ==
@@ -95,7 +95,7 @@ http://zenfoliopress.com/2013/08/25/protected-galleries-using-zenfoliopress/
 Will add soon...
 
 == Changelog ==
-= 0.1.4 =
+= 0.1.5 =
 Added the ability to set options for each photo or photoset uniquely with short code parameters.
 
 = 0.1.3 = 
