@@ -3,7 +3,7 @@
  Plugin Name: ZenfolioPress
  Plugin URI: http://zenfoliopress.com
  Description: Integrate Zenfolio images and galleries with Word Press.
- Version: 0.1.4
+ Version: 0.1.5
  Author: David Nusbaum
  Author URI: http://www.davidnusbaum.com
  License: GPL2
@@ -45,6 +45,16 @@ class ZenfolioPress {
 	const LIGHTBOX_VERSION = 'v2.05z';
 	private static $options = null;
 	private static $sizes = null;
+	private static $widths = array(
+		'0'=>array('w'=>80,'h'=>80),
+		'1'=>array('w'=>60,'h'=>60),
+		'10'=>array('w'=>120,'h'=>120),
+		'11'=>array('w'=>200,'h'=>200),
+		'2'=>array('w'=>400,'h'=>400),
+		'3'=>array('w'=>580,'h'=>450),
+		'4'=>array('w'=>800,'h'=>630),
+		'5'=>array('w'=>1100,'h'=>850),
+		'6'=>array('w'=>1550,'h'=>960));
 
 	public static function getOptions() {
 		if(self::$options === null) {
@@ -60,7 +70,7 @@ class ZenfolioPress {
 			$default['lightBoxSize']='3';
 			$default['lightBoxTitle']='Title';
 
-			/* update defauls with current options */
+			/* update defaults with current options */
 			$options = get_option('ZFP_Settings');
 			if(!empty($options)) {
 				foreach ($options as $option=>$value) {
@@ -75,46 +85,42 @@ class ZenfolioPress {
 	}
 
 	public static function loadScripts() {
-
-		$options = self::getOptions();
-		if($options['photoAction'] == '3' | $options['thumbAction'] == '3' ) {
-			wp_enqueue_script('jquery');
-			$url = plugins_url('slimbox2.js', __FILE__);
-			$fileName = WP_PLUGIN_DIR . '/zenfoliopress/slimbox2.js';
-			if ( file_exists($fileName) ) {
-				wp_register_script('zfp_slimbox2', $url,false,self::LIGHTBOX_VERSION);
-				wp_enqueue_script( 'zfp_slimbox2');
-			}
+		wp_enqueue_script('jquery');
+		$url = plugins_url('slimbox2.js', __FILE__);
+		$fileName = WP_PLUGIN_DIR . '/zenfoliopress/slimbox2.js';
+		if ( file_exists($fileName) ) {
+			wp_register_script('zfp_slimbox2', $url,false,self::LIGHTBOX_VERSION);
+			wp_enqueue_script( 'zfp_slimbox2');
 		}
 	}
 
 	public static function loadStyleSheets() {
-		$options = self::getOptions();
-				
 		/* load ZenfolioPress style sheet */
-		$url = plugins_url('style.php', __FILE__);
-		$fileName = WP_PLUGIN_DIR . '/zenfoliopress/style.php';
+		$url = plugins_url('zfp.css', __FILE__);
+		$fileName = WP_PLUGIN_DIR . '/zenfoliopress/zfp.css';
 		if ( file_exists($fileName) ) {
-			wp_register_style('zfp_style', $url,false,self::STYLE_VERSION.'|'.$options['thumbPadding']);
+			wp_register_style('zfp_style', $url,false,self::STYLE_VERSION);
 			wp_enqueue_style( 'zfp_style');
 		}
 
-		/* load lightbox style sheet if needed */
-		if($options['photoAction'] == '3' | $options['thumbAction'] == '3' ) {
-			$url = plugins_url('slimbox2.css', __FILE__);
-			$fileName = WP_PLUGIN_DIR . '/zenfoliopress/slimbox2.css';
-			if ( file_exists($fileName) ) {
-				wp_register_style('zfp_slimbox2', $url,false,self::LIGHTBOX_STYLE_VERSION);
-				wp_enqueue_style( 'zfp_slimbox2');
-			}
+		/* load lightbox style sheet */
+		$url = plugins_url('slimbox2.css', __FILE__);
+		$fileName = WP_PLUGIN_DIR . '/zenfoliopress/slimbox2.css';
+		if ( file_exists($fileName) ) {
+			wp_register_style('zfp_slimbox2', $url,false,self::LIGHTBOX_STYLE_VERSION);
+			wp_enqueue_style( 'zfp_slimbox2');
 		}
 	}
 
 	public static function showPhoto($params) {
 		$options = self::getOptions();
-		$default_size = $options['photoSize'];
-		$lightBoxSize = $options['lightBoxSize'];
-		extract(shortcode_atts(array('id' => '','size'=>$default_size), $params));
+		$defaults = array(
+			'id' => '',
+			'size' => $options['photoSize'],
+			'action' => $options['photoAction'],
+			'box_size' => $options['lightBoxSize'],
+			'link_target' => $options['photoTarget']);
+		extract(shortcode_atts($defaults, $params));
 		/* trim off any additional characters the user might have included */
 		if(($h=strrpos($id,'h'))!==false) {
 			$id = substr($id,$h+1);
@@ -125,23 +131,26 @@ class ZenfolioPress {
 		require_once('Zenfolio.php');
 		$zenfolio = new Zenfolio();
 		$photo = $zenfolio->loadPhoto($id,'LEVEL2');
+		if(empty($photo)) {
+			return "<!-- photo $id could not be loaded by ZenfolioPress -->";
+		}
 
-		if($options['photoAction'] == '3') {
-			$link = 'http://'.$photo->UrlHost.$photo->UrlCore.'-'.$lightBoxSize.'.jpg?sn='.$photo->Sequence;
+		if($action == '3') {
+			$link = 'http://'.$photo->UrlHost.$photo->UrlCore.'-'.$box_size.'.jpg?sn='.$photo->Sequence;
 		} else {
 			$link = $photo->PageUrl;
 		}
-		$lightbox = $options['photoAction'] == '3' ? 'rel="zfpLightbox-p'.$id.'"' : '';
+		$lightbox = $action == '3' ? 'rel="zfpLightbox-p'.$id.'"' : '';
 		$title = $photo->Title ? 'title="'.htmlspecialchars($photo->Title).'"' : '';
-		$target = $options['photoAction'] < '3' ? 'target="'.$options['photoTarget'].'"' : '';
+		$target = $action < '3' ? 'target="'.$link_target.'"' : '';
 		$src = 'http://'.$photo->UrlHost.'/'.$photo->UrlCore.'-'.$size.'.jpg?sn='.$photo->Sequence;
-		
+
 		$html = '';
-		if($options['photoAction'] > '0') {
+		if($action > '0') {
 			$html.= "<a href=\"$link\" $lightbox $title $target>";
 		}
 		$html.= "<img id=\"$id\" src=\"$src\"/>";
-		if($options['photoAction'] > '0') {
+		if($action > '0') {
 			$html.= "</a>";
 		}
 		return $html;
@@ -149,8 +158,15 @@ class ZenfolioPress {
 
 	public static function showPhotoSet($params) {
 		$options = self::getOptions();
-		$default_size = $options['thumbSize'];
-		extract(shortcode_atts(array('id' => '','size'=>$default_size), $params));
+		$defaults = array(
+			'id' => '',
+			'size' => $options['thumbSize'],
+			'padding' => $options['thumbPadding'],
+			'action' => $options['thumbAction'],
+			'box_size' => $options['lightBoxSize'],
+			'box_title' => $options['lightBoxTitle'],
+			'link_target' => $options['thumbTarget']);
+		extract(shortcode_atts($defaults, $params));
 		/* trim off any additional characters the user might have included */
 		if(($p=strrpos($id,'p'))!==false) {
 			$id = substr($id,$p+1);
@@ -159,20 +175,28 @@ class ZenfolioPress {
 		/* retrieve the PhotoSet data from zenfolio */
 		require_once('Zenfolio.php');
 		$zenfolio = new Zenfolio();
-		$includeDetails = $options['lightBoxTitle']=='Caption' ? 2 : 1;
+		$includeDetails = $box_title=='Caption' ? 2 : 1;
 		$photoSet = $zenfolio->loadPhotoSet($id,'LEVEL2',$includeDetails);
+		if(empty($photoSet)) {
+			return "<!-- photoset $id could not be loaded by ZenfolioPress -->";
+		}
 		$photos = $photoSet->Photos;
-		
-		$target = $options['thumbAction'] < '3' ? 'target="'.$options['thumbTarget'].'"' : '';
-		$lightbox = $options['thumbAction'] == '3' ? 'rel="zfpLightbox-ps'.$id.'"' : '';
-		$lightBoxSize = $options['lightBoxSize'];
+		if(empty($photos)) {
+			return "<!-- photoset $id does not contain any public photos -->";
+		}
+
+		$target = $action < '3' ? 'target="'.$link_target.'"' : '';
+		$lightbox = $action == '3' ? 'rel="zfpLightbox-ps'.$id.'"' : '';
+		$lightBoxSize = $box_size;
+		$fw = self::$widths[$size]['w']+(2*$padding);  // frame width
+		$fh = self::$widths[$size]['h']+(2*$padding);  // frame height
 
 		$html = '';
 		if(is_array($photos) && count($photos)) {
 			$html.= "<div id=\"zfp_photoset_$id\" class=\"zfp_photoset\">\n";
 			foreach ($photos as $photo) {
 				$src = 'http://'.$photo->UrlHost.$photo->UrlCore.'-'.$size.'.jpg?sn='.$photo->Sequence;
-				switch ($options['thumbAction']) {
+				switch ($action) {
 					case '2':
 						$link = $photoSet->PageUrl.substr($photo->PageUrl,strrpos($photo->PageUrl,'/'));
 						break;
@@ -182,7 +206,7 @@ class ZenfolioPress {
 					default:
 						$link = $photo->PageUrl;
 				}
-				switch($options['lightBoxTitle']) {
+				switch($box_title) {
 					case 'Title':
 						$title = $photo->Title ? 'title="'.htmlspecialchars($photo->Title).'"' : '';
 						$alt = $photo->Title ? 'alt="'.htmlspecialchars($photo->Title).'"' : '';
@@ -198,16 +222,14 @@ class ZenfolioPress {
 				if($photo->Id == $photoSet->TitlePhoto->Id) {
 					$titleSrc = 'http://'.$photo->UrlHost.$photo->UrlCore.'-11.jpg?sn='.$photo->Sequence;
 				}
-				//$html.= "<table class=\"zfp_frame\" style=\"$tableStyle\">\n";
-				$html.= "<table class=\"zfp_frame zfp_$size\">\n";
+				$html.= "<table class=\"zfp_frame\" style=\"width:{$fw}px; height:{$fh}px;\">\n";
 				$html.= "<tr class=\"zfp_frame\">\n";
-				//$html.= "<td class=\"zfp_frame \" style=\"$cellStyle\">\n";
-				$html.= "<td class=\"zfp_frame zfp_$size\">\n";
-				if($options['thumbAction'] > 0) {
+				$html.= "<td class=\"zfp_frame\">\n";
+				if($action > 0) {
 					$html.= "<a class=\"zfp_frame\" href=\"$link\" $lightbox $title $target>\n";
 				}
 				$html.= "<img src=\"$src\" $alt >\n";
-				if($options['thumbAction'] > 0) {
+				if($action > 0) {
 					$html.= "</a>\n";
 				}
 				$html.= "</td>\n";
@@ -219,6 +241,5 @@ class ZenfolioPress {
 
 		return $html;
 	}
-
 }
 ?>
