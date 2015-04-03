@@ -9,7 +9,7 @@ class ZenfolioPressAdmin {
 		return;
 	}
 	
-	public function lightBoxSizeHTML() {
+	public static function lightBoxSizeHTML() {
 		$options = ZenfolioPress::getOptions();
 		self::selectSizeHTML('lightBoxSize', $options['lightBoxSize']);
 	}
@@ -67,7 +67,7 @@ class ZenfolioPressAdmin {
 		echo 'as an incentive for me to keep making improvements.</p>';
 	}
 
-	public function photoSizeHTML() {
+	public static function photoSizeHTML() {
 		$options = ZenfolioPress::getOptions();
 		self::selectSizeHTML('photoSize', $options['photoSize']);
 	}
@@ -127,12 +127,32 @@ class ZenfolioPressAdmin {
 		self::linkActionHTML('thumbAction',$options['thumbAction'],true);
 	}
 
-	public function thumbSizeHTML() {
+	public static function thumbSizeHTML() {
 		$options = ZenfolioPress::getOptions();
-		self::selectSizeHTML('thumbSize', $options['thumbSize']);
+		$value = $options['thumbSize'];
+		echo "<select id='thumbSize' name='ZFP_Settings[thumbSize]'>\n";
+		echo "<option value=\"0\"".($value == '0'?'selected':'').">Small thumbnail (up to 80 x 80)</option>\n";
+		echo "<option value=\"S0\"".($value == 'S0'?'selected':'').">Small square thumbnail (53 x 53)</option>\n";
+		echo "<option value=\"1\"".($value == '1'?'selected':'').">Square thumbnail (60 x 60, cropped square)</option>\n";
+		echo "<option value=\"10\"".($value == '10'?'selected':'').">Medium thumbnail (up to 120 x 120)</option>\n";
+		echo "<option value=\"S10\"".($value == 'S10'?'selected':'').">Medium square thumbnail (80 x 80, cropped)</option>\n";
+		echo "<option value=\"11\"".($value == '11'?'selected':'').">Large thumbnail (up to 200 x 200)</option>\n";
+		echo "<option value=\"S11\"".($value == 'S11'?'selected':'').">Large square thumbnail (133 x 133, cropped)</option>\n";
+		echo "<option value=\"2\"".($value == '2'?'selected':'').">Small (up to 400 x 400)</option>\n";
+		echo "<option value=\"S2\"".($value == 'S2'?'selected':'').">Small square (267 x 267, cropped)</option>\n";
+		echo "<option value=\"3\"".($value == '3'?'selected':'').">Medium (up to 580 x 450)</option>\n";
+		echo "<option value=\"S3\"".($value == 'S3'?'selected':'').">Medium (387 x 300, cropped)</option>\n";
+		echo "<option value=\"4\"".($value == '4'?'selected':'').">Large (up to 800 x 630)</option>\n";
+		echo "<option value=\"S4\"".($value == 'S4'?'selected':'').">Large (533 x 420, cropped)</option>\n";
+		echo "<option value=\"5\"".($value == '5'?'selected':'').">X-Large (up to 1100 x 850)</option>\n";
+		echo "<option value=\"S5\"".($value == 'S5'?'selected':'').">X-Large (733 x 567, cropped)</option>\n";
+		echo "<option value=\"6\"".($value == '6'?'selected':'').">XX-Large (up to 1550 x 960)</option>\n";
+		echo "<option value=\"S6\"".($value == 'S6'?'selected':'').">XX-Large (960 x 640, cropped)</option>\n";
+		echo "</select>\n";
+		
 	}
 	
-	public function thumbPaddingHTML() {
+	public static function thumbPaddingHTML() {
 		$options = ZenfolioPress::getOptions();
 		$value = $options['thumbPadding'];
 		echo "<select id='thumbPadding' name='ZFP_Settings[thumbPadding]'>\n";
@@ -181,7 +201,7 @@ class ZenfolioPressAdmin {
 					}
 					break;
 				case 'thumbSize':
-					if(in_array($value, array('0','1','2','3','4','5','6','10','11'))) {
+					if(in_array($value, array('0','S0','1','2','S2','3','S3','4','S4','5','S5','6','S6','10','S10','11','S11'))) {
 						$valid[$option] = $value;
 					}
 					break;

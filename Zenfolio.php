@@ -1,7 +1,7 @@
 <?php
 class Zenfolio {
-	private static $url = 'www.zenfolio.com/api/1.4/zfapi.asmx';
-	private static $userAgent = 'ZenfolioPress v001';
+	private static $url = 'api.zenfolio.com/api/1.8/zfapi.asmx';
+	private static $userAgent = 'ZenfolioPress v016';
 	var $token = null;
 	var $loginName = null;
 	var $cacheSeconds = 3600;
@@ -11,37 +11,38 @@ class Zenfolio {
 	}
 
 	private function call($method,$params,$try = false,$secure = false) {
-		$request['method'] = $method;
-		$request['params'] = $params;
-		$request['id'] = 1;
-		$bodyString = json_encode($request);
-		//trigger_error($bodyString,E_USER_NOTICE);
+		if(is_array($params)) {
+			$params = json_encode($params);
+		}
+		$bodyString = "{\"method\": \"".$method."\",\"params\": ".$params.",\"id\": 1}";
 		$bodyLength = strlen($bodyString);
 		$headers = array();
-		$headers[] = 'Host: www.zenfolio.com';
-		$headers[] = 'X-Zenfolio-User-Agent: '.self::$userAgent;
+		//$headers[] = 'Host: api.zenfolio.com';
+		//$headers[] = 'X-Zenfolio-User-Agent: '.self::$userAgent;
 		if($this->token) {
 			$headers[] = 'X-Zenfolio-Token: '.$this->token;
 		}
+		$headers[] = 'User-Agent: '.self::$userAgent;
 		$headers[] = 'Content-Type: application/json';
-		$headers[] = 'Content-Length: '.$bodyLength."\r\n";
-		$headers[] = $bodyString;
+		$headers[] = 'Content-Length: '.$bodyLength;
 
-		//$bodyString = '{"method": "'.$method.'","params": '.$params.',"id": 1}';
 		$protocol = $secure ? 'https' : 'http';
 
 		$curl_connection = curl_init($protocol.'://'.self::$url);
 		curl_setopt($curl_connection, CURLOPT_USERAGENT, self::$userAgent);
 		curl_setopt($curl_connection, CURLOPT_RETURNTRANSFER, true);
 		curl_setopt($curl_connection, CURLOPT_CONNECTTIMEOUT, 5);
+		curl_setopt($curl_connection, CURLOPT_HEADER, true);
 		curl_setopt($curl_connection, CURLOPT_POST, true);
-		curl_setopt($curl_connection, CURLOPT_HEADER, TRUE);
+		curl_setopt($curl_connection, CURLOPT_POSTFIELDS, $bodyString);
 		curl_setopt($curl_connection, CURLOPT_HTTPHEADER, $headers);
-
+		curl_setopt($curl_connection, CURLOPT_CRLF,true);
+		curl_setopt($curl_connection, CURLOPT_VERBOSE, true);
+		
 		$result = curl_exec($curl_connection);
+		
 		curl_close($curl_connection);
 		if ($result) {
-			//trigger_error($result,E_USER_NOTICE);
 			$json = json_decode(substr($result, strpos($result, '{') - 1));
 			$result = $json->result;
 			if(!$result) {
@@ -97,7 +98,8 @@ class Zenfolio {
 	}
 
 	public function loadPhotoSet($photoSetId,$level='LEVEL1',$includePhotos=false) {
-		$params = array($photoSetId,$level,$includePhotos ? true : false);
+		$includePhotos = $includePhotos ? 'true' : 'false';
+		$params = '['.$photoSetId.',"'.$level.'",'.$includePhotos.']';
 		$photoSet = $this->call('LoadPhotoSet',$params);
 		if($includePhotos > 1) {
 			foreach ($photoSet->Photos as &$photo) {

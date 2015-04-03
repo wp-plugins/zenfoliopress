@@ -3,8 +3,8 @@ Contributors: nusbaum
 Donate link: http://zenfoliopress.com/
 Tags: zenfolio, photo, gallery, photo gallery, photo collection, thumbnails
 Requires at least: 2.7
-Tested up to: 3.6
-Stable tag: 0.1.5
+Tested up to: 4.1.1
+Stable tag: 0.1.6
 
 The ZenfolioPress plugin allows users to easily incorporate 
 their Zenfolio hosted photos, galleries and collections into 
@@ -41,69 +41,29 @@ If you have a friendly URL for a gallery or collection you can find the id by go
 
 > http:&#47;&#47;www.zenfolio.com/nusbaum/p**444438099**/edit
 
-= Short Code Options =
-**id**  
-This is the photo or photo set id and is described above because it is always required.
-
-**size**  
-This is the size of the photo or thumbnail that is displayed on the page or post. The
-options are based on those provided by Zenfolio.  
-
-* '0'	Small thumbnail (up to 80 x 80)
-* '1'	Square thumbnail (60 x 60, cropped square)
-* '10'	Medium thumbnail (up to 120 x 120)
-* '11'	Large thumbnail (up to 200 x 200)
-* '2'	Small (up to 400 x 400)
-* '3'	Medium (up to 580 x 450)
-* '4'	Large (up to 800 x 630)
-* '5'	X-Large (up to 1100 x 850)
-* '6'	XX-Large (up to 1550 x 960)
-
-**padding**  
-This is the amount of padding, in pixels, that is placed around an image in a photo set.
-The value should be a number with no trailing 'px'.
-
-**action**  
-This is the action that will occur when a view clicks on an image.
-
-* '0' Nothing will happen.
-* '3' Open the photo in a lightbox.
-* '2' Open the photo in the Zenfolio collection it came from. (only applies to photosets)
-* '1' Open the photo in the Zenfolio gallery it came from.
-
-**link_target**  
-This defines how a photo will link to a Zenfolio collection or gallery.
-
-* '_self' The collection or gallery is opened in the same browser window.
-* '_blank' The collection or gallery is opened in a new browser window.
-
-**box_size**   
-This defines the size of the photo that will appear in the lightbox. The options are
-the same as described for the size option.
-
-**box_title**
-The defines the photo title that is included with the lightbox.
-
-* 'None' No title is displayed.
-* 'Title' The photo title from Zenfolio is displayed.
-* 'Caption' The photo caption from Zenfolio is displayed.
-
 == Frequently Asked Questions ==
 
-= Can I have password protected galleries with ZenfolioPress =
+= A question that someone might have =
 
-http://zenfoliopress.com/2013/08/25/protected-galleries-using-zenfoliopress/
+An answer to that question.
 
+= What about foo bar? =
+
+Answer to foo bar dilemma.
 
 == Screenshots ==
 Will add soon...
 
 == Changelog ==
-= 0.1.5 =
-Added the ability to set options for each photo or photoset uniquely with short code parameters.
+= 0.1.6 =
+Updated to supported changes in Zenfolio API and added square (cropped) thumbnails.
+
+= 0.1.4 =
+Updated to slimbox v2.05 for compatibility with WordPress 3.6.
 
 = 0.1.3 = 
-Photo, as well as photoset, lightbox now uses the default image size. Changed the "rel" attribute so the ZenfolioPress use of Slimbox does not conflict with the Slimbox plugin.
+Photo, as well as photoset, lightbox now uses the default image size. Changed the "rel" attribute so the ZenfolioPress 
+used of Slimbox does not conflict with the Slimbox plugin.
  
 = 0.1.2 =
 Fixed a bug that affected how titles and captions are set for photosets.

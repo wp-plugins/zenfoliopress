@@ -34,27 +34,38 @@ if ( is_admin() ){
 	add_action('wp_print_styles',array('ZenfolioPress','loadStyleSheets'));
 	add_action('wp_print_scripts',array('ZenfolioPress','loadScripts'));
 	/* add filters for photo and photoset shortcuts */
-	add_filter('widget_text', 'do_shortcode', SHORTCODE_PRIORITY,2);
+	add_filter('widget_text', 'do_shortcode', 11,2);
 	add_shortcode('ZFP_Photo', array('ZenfolioPress','showPhoto'));
 	add_shortcode('ZFP_PhotoSet',array('ZenfolioPress','showPhotoSet'));
 }
 
 class ZenfolioPress {
-	const STYLE_VERSION = 'v003';
+	const STYLE_VERSION = 'v015'; //3
 	const LIGHTBOX_STYLE_VERSION = 'v2.04';
 	const LIGHTBOX_VERSION = 'v2.05z';
 	private static $options = null;
-	private static $sizes = null;
-	private static $widths = array(
+	private static $sequence = null;
+	//private static $sizes = null; not sure why it's here
+	private static $sizes = array(
 		'0'=>array('w'=>80,'h'=>80),
 		'1'=>array('w'=>60,'h'=>60),
-		'10'=>array('w'=>120,'h'=>120),
-		'11'=>array('w'=>200,'h'=>200),
 		'2'=>array('w'=>400,'h'=>400),
 		'3'=>array('w'=>580,'h'=>450),
 		'4'=>array('w'=>800,'h'=>630),
 		'5'=>array('w'=>1100,'h'=>850),
-		'6'=>array('w'=>1550,'h'=>960));
+		'6'=>array('w'=>1550,'h'=>960),
+		'10'=>array('w'=>120,'h'=>120),
+		'11'=>array('w'=>200,'h'=>200));
+	private static $squares = array(
+		'0'=>array('h'=>53,'w'=>53),
+		'1'=>array('h'=>40,'w'=>40),
+		'2'=>array('h'=>267,'w'=>267),
+		'3'=>array('h'=>387,'w'=>300),
+		'4'=>array('h'=>533,'w'=>420),
+		'5'=>array('h'=>733,'w'=>567),
+		'6'=>array('h'=>960,'w'=>640),
+		'10'=>array('h'=>80,'w'=>80),
+		'11'=>array('h'=>133,'w'=>133));
 
 	public static function getOptions() {
 		if(self::$options === null) {
@@ -82,6 +93,23 @@ class ZenfolioPress {
 			self::$options = $default;
 		}
 		return self::$options;
+	}
+	
+	/**
+	 * Get the next sequence number for a photo or photoset
+	 * 
+	 * Sequence numbers are used so the same photo or photoset can
+	 * be used multiple times within the same page.
+	 * 
+	 * @param String $id The id for the Zenfolio resource being referenced.
+	 */
+	public static function getSequence($id) {
+		if(self::$sequence === null || !isset(self::$sequence[$id])) {
+			self::$sequence[$id]=0;
+		} else {
+			self::$sequence[$id] = self::$sequence[$id]+1;
+		}
+		return self::$sequence[$id];
 	}
 
 	public static function loadScripts() {
@@ -168,9 +196,7 @@ class ZenfolioPress {
 			'link_target' => $options['thumbTarget']);
 		extract(shortcode_atts($defaults, $params));
 		/* trim off any additional characters the user might have included */
-		if(($p=strrpos($id,'p'))!==false) {
-			$id = substr($id,$p+1);
-		}
+		$id = preg_replace("/[^0-9,.]/", "", $id);
 
 		/* retrieve the PhotoSet data from zenfolio */
 		require_once('Zenfolio.php');
@@ -184,16 +210,27 @@ class ZenfolioPress {
 		if(empty($photos)) {
 			return "<!-- photoset $id does not contain any public photos -->";
 		}
+		if(is_numeric($size)) {
+			$square = false;
+			$fw = self::$sizes[$size]['w']+(2*$padding);  // frame width
+			$fh = self::$sizes[$size]['h']+(2*$padding);  // frame height
+		} else {
+			$size = substr($size,1);
+			$square=true;
+			$fw = self::$squares[$size]['w'];  // frame width
+			$fh = self::$squares[$size]['h'];  // frame height
+		}
+
+		$style = "style=\"width:{$fw}px; height:{$fh}px; margin:{$padding}px;\"";
 
 		$target = $action < '3' ? 'target="'.$link_target.'"' : '';
-		$lightbox = $action == '3' ? 'rel="zfpLightbox-ps'.$id.'"' : '';
+		$id_seq = $id.'_'.self::getSequence($id);
+		$lightbox = $action == '3' ? 'rel="zfpLightbox-ps'.$id_seq.'"' : '';
 		$lightBoxSize = $box_size;
-		$fw = self::$widths[$size]['w']+(2*$padding);  // frame width
-		$fh = self::$widths[$size]['h']+(2*$padding);  // frame height
 
 		$html = '';
 		if(is_array($photos) && count($photos)) {
-			$html.= "<div id=\"zfp_photoset_$id\" class=\"zfp_photoset\">\n";
+			$html.= "<div id=\"zfp_photoset_$id_seq\" class=\"zfp_photoset\">\n";
 			foreach ($photos as $photo) {
 				$src = 'http://'.$photo->UrlHost.$photo->UrlCore.'-'.$size.'.jpg?sn='.$photo->Sequence;
 				switch ($action) {
@@ -222,19 +259,49 @@ class ZenfolioPress {
 				if($photo->Id == $photoSet->TitlePhoto->Id) {
 					$titleSrc = 'http://'.$photo->UrlHost.$photo->UrlCore.'-11.jpg?sn='.$photo->Sequence;
 				}
-				$html.= "<table class=\"zfp_frame\" style=\"width:{$fw}px; height:{$fh}px;\">\n";
-				$html.= "<tr class=\"zfp_frame\">\n";
-				$html.= "<td class=\"zfp_frame\">\n";
-				if($action > 0) {
-					$html.= "<a class=\"zfp_frame\" href=\"$link\" $lightbox $title $target>\n";
+				if($square) {
+					if($photo->Height/$photo->Width > 1) {
+						$height = self::$sizes[$size]['h'];
+						$top=0-round(($height-$fh)/3);
+						$right = $width = self::$sizes[$size]['w'];
+						$bottom=$top+$fh;
+						$left=0;
+						//$img_style =  "style=\"clip: rect({$top}px, {$right}px, {$Bottom}px, {$left}px);\"";
+						$img_style =  "style=\"left:{$left}px; top:{$top}px;\"";
+					} else {
+						$width = self::$sizes[$size]['w'];
+						$top=0;
+						$bottom=$fh;
+						$left = 0-round(($width-$fw)/2);
+						$right = $left + $fw;
+						$img_style =  "style=\"left:{$left}px; top:{$top}px; max-width:{$width}px;\"";
+						//$img_style = "style=\"max-width:{$width}px; clip: rect({$top}px, {$right}px, {$Bottom}px, {$left}px);\"";
+					}
+					$html.= "<div class=\"zfp_box\" $style>\n";
+					//echo "<div id=\"".'P'.$photo->Id."\" class=\"zfp_dimmed\" $style></div>\n";
+					if($action > 0) {
+						$html.= "<a class=\"zfp_box\" $style href=\"$link\"  $lightbox $title $target>\n";
+					}
+					$html.= "<img src=\"$src\" class=\"zfp_box\" $img_style $alt>\n";
+					if($action > 0) {
+						$html.= '</a>';
+					}
+					$html.= "</div>\n";
+				} else {
+					$html.= "<table class=\"zfp_frame\" $style>\n";
+					$html.= "<tr class=\"zfp_frame\">\n";
+					$html.= "<td class=\"zfp_frame\">\n";
+					if($action > 0) {
+						$html.= "<a class=\"zfp_frame\" href=\"$link\" $lightbox $title $target>\n";
+					}
+					$html.= "<img src=\"$src\" $alt >\n";
+					if($action > 0) {
+						$html.= "</a>\n";
+					}
+					$html.= "</td>\n";
+					$html.= "</tr>\n";
+					$html.= "</table>\n";
 				}
-				$html.= "<img src=\"$src\" $alt >\n";
-				if($action > 0) {
-					$html.= "</a>\n";
-				}
-				$html.= "</td>\n";
-				$html.= "</tr>\n";
-				$html.= "</table>\n";
 			}
 			$html.= "</div> <!-- /zfp_photoset -->\n";
 		}
