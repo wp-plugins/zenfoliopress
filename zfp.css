@@ -2,3 +2,49 @@
 #content .zfp_frame, .zfp_frame {font-size: 0; border: 0; padding:0; margin:0;}
 #content table.zfp_frame,table.zfp_frame {float: left; border-collapse: collapse; margin: 0; background: none; background-color: transparent; border: 0;}
 #content td.zfp_frame,td.zfp_frame {text-align: center; line-height: 0; vertical-align: middle; background: none; background-color: transparent; border: 0;}
+
+div.zfp_photoset {
+	overflow: hidden;
+	width: 100%;
+}
+
+div.zfp_box {  
+	float: left;
+	position: relative;
+	border: 0px;
+	padding: 0px;
+	margin: 0px;
+	overflow: hidden;
+}
+
+div.zfp_dimmed {
+	display: block;
+	/* Fallback for web browsers that doesn't support RGBa */
+	background: rgb(0, 0, 0);
+	/* RGBa with 0.6 opacity */
+	background: rgba(0, 0, 0, 0.6);
+	/* For IE 5.5 - 7*/
+	filter: progid : DXImageTransform.Microsoft.gradient ( startColorstr =
+		#99000000, endColorstr = #99000000 );
+	/* For IE 8*/
+	-ms-filter:
+		"progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000,endColorstr=#99000000)";
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index:10;
+}
+
+img.zfp_box {
+	margin: 0px;
+	padding: 0px;
+	border: none;
+	-moz-border-radius: 0px;
+	-khtml-border-radius: 0px;
+	-webkit-border-radius: 0px;
+	border-radius: 0px;
+	position: absolute;
+	top: 0;
+	left: 0;
+	overflow: hidden;
+}
